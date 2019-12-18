@@ -4,23 +4,24 @@ const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 const PDFDocument = require("pdfkit");
+const download = require("image-downloader");
 
 const pdf = new PDFDocument();
 
 let queryURL = "";
 let gitURL = "";
 let backgroundHex = "";
-let profileImage = "";
+let avatarURL = "";
 let gitName = "";
 let gitLocation = "";
 let gitBlog = "";
 let gitBio = "";
 let gitRepositories, gitFollowers, gitStars, gitUsersFollowing;
 
-axios.get("https://api.github.com/users/colinstevens06").then(function(res) {
-   // console.log(res.data);
-   console.log(res.data.login);
-});
+// axios.get("https://api.github.com/users/colinstevens06").then(function(res) {
+//    // console.log(res.data);
+//    // console.log(res.data.login);
+// });
 
 inquirer
    .prompt([
@@ -64,9 +65,10 @@ inquirer
 
       axios.get(queryURL).then(function(info) {
          let gitHub = info.data;
+
          // console.log(gitHub);
 
-         profileImage = gitHub.avatar_url;
+         avatarURL = gitHub.avatar_url;
          gitName = gitHub.name;
          gitLocation = gitHub.location;
          gitBlog = gitHub.blog;
@@ -75,12 +77,22 @@ inquirer
          gitFollowers = gitHub.followers;
          gitUsersFollowing = gitHub.following;
 
-         // console.log(gitUsersFollowing);
-         // console.log(backgroundHex.toString());
-         // console.log(backgroundColor);
+         const options = {
+            url: avatarURL,
+            dest: "./headshots"
+            // filename: `${gitHubUsername}.jpg`
+         };
+
+         console.log(process.argv);
+         download
+            .image(options)
+            .then(({ filename, image }) => {
+               console.log("Saved to", filename);
+            })
+            .catch(err => console.error(err));
 
          pdf.pipe(fs.createWriteStream("./" + gitHubUsername + ".pdf"));
-         // pdf.image(profileImage, 5, 5, { width: 200 });
+         // pdf.image(avatarURL, 5, 5, { width: 200 });
 
          pdf.rect(0, 10, 650, 100)
             .lineWidth(3)
