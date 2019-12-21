@@ -47,21 +47,33 @@ inquirer
       switch (backgroundColor) {
          case "Purple":
             backgroundHex = "#9933ff";
+            secondaryHex = "#92e534";
+            textColor = "#ffffff";
             break;
          case "Blue":
             backgroundHex = "#0099ff";
+            secondaryHex = "#e57a34";
+            textColor = "#ffffff";
             break;
          case "Green":
             backgroundHex = "#00cc66";
+            secondaryHex = "#9933ff";
+            textColor = "#ffffff";
             break;
          case "Yellow":
             backgroundHex = "#ffff66";
+            secondaryHex = "#344ce5";
+            textColor = "#000000";
             break;
          case "Orange":
             backgroundHex = "#ff9933";
+            secondaryHex = "#0099ff";
+            textColor = "#ffffff";
             break;
          default:
             backgroundHex = "#ff0066";
+            secondaryHex = "#34e596";
+            textColor = "#000000";
       }
 
       axios.get(queryURL).then(function(info) {
@@ -109,7 +121,7 @@ inquirer
                .secondary-background {
                   position: relative;
                   width: 100%;
-                  background-color: #6e72f0;
+                  background-color: ${secondaryHex};
                   height: 325px;
                }
       
@@ -125,7 +137,7 @@ inquirer
                   width: 500px;
                   height: 325px;
                   background-color: ${backgroundHex};
-                  color: white;
+                  color: ${textColor};
                   border-radius: 5px;
                }
       
@@ -171,7 +183,7 @@ inquirer
                   display: inline-block;
                   width: 225px;
                   float: left;
-                  color: white;
+                  color:  ${textColor};
                   margin: 0 12px 25px 12px;
                   padding: 14px 8px;
                   height: 125px;
