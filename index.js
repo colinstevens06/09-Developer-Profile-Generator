@@ -4,11 +4,11 @@ const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 const pdf = require("html-pdf");
-const testHTML = fs.readFileSync("./hide/template.html", "utf8");
+// const testHTML = fs.readFileSync("./hide/template.html", "utf8");
 const options = { format: "letter" };
 
 let queryURL = "";
-let gitURL = "";
+// let gitURL = "";
 let backgroundHex = "";
 let secondaryHex = "";
 let textColor = "";
@@ -18,11 +18,6 @@ let gitLocation = "";
 let gitBlog = "";
 let gitBio = "";
 let gitRepositories, gitFollowers, gitStars, gitUsersFollowing;
-
-// axios.get("https://api.github.com/users/colinstevens06").then(function(res) {
-//    // console.log(res.data);
-//    // console.log(res.data.login);
-// });
 
 inquirer
    .prompt([
@@ -42,7 +37,7 @@ inquirer
       let backgroundColor = response.background;
       let gitHubUsername = response.username;
       queryURL = "https://api.github.com/users/" + gitHubUsername;
-      gitURL = "https://www.github.com/" + gitHubUsername;
+      // gitURL = "https://www.github.com/" + gitHubUsername;
 
       switch (backgroundColor) {
          case "Purple":
@@ -79,7 +74,7 @@ inquirer
       axios.get(queryURL).then(function(info) {
          let gitHub = info.data;
 
-         console.log(gitHub);
+         // console.log(gitHub);
 
          avatarURL = gitHub.avatar_url;
          gitName = gitHub.name;
@@ -214,7 +209,6 @@ inquirer
                   <div class="main-info">
                      <h1>Hi!</h1>
                      <h2>My name is ${gitName}!</h2>
-                     <p>Currently @ University of Maryland Medical System</p>
                      <div class="links">
                         <div><i></i>${gitLocation} <i> </i> Github <i> </i><a href="${gitBlog}"> Blog</a></div>
                      </div>
@@ -241,9 +235,7 @@ inquirer
                </div>
             </div>
          </body>
-      </html>
-      
-      `;
+      </html>`;
 
          pdf.create(theHTML, options).toFile(
             `./${gitHubUsername}.pdf`,
